@@ -1,3 +1,5 @@
+score_h = [0]
+
 def EnterName():
     try:
         name = input("What is your name?")
@@ -37,15 +39,12 @@ def DrawCards():
             #Uncomment below to see answer
             #print(str(gameanswer))
 
-            #Possibly clean this up as well
-            guess = input("Is the second card higher(h) or lower(l) than " + stringfirstcard + "?")
+            guess = str(UserGuess(input("Is the second card higher(h) or lower(l) than " + stringfirstcard + "?")))
 
-            if str(gameanswer) == str(UserGuess(guess)):
+            if str(gameanswer) == guess:
                 print("Hooray! You win the round!")
+                ChangeScore(1)
                 DrawCards()
-
-            # elif str(UserGuess(guess.lower()) == 's'):
-            #     print("Coming soon")
 
             else:
                 print("Whoops. You lose this round. Try again!")
@@ -72,7 +71,7 @@ def UserGuess(guess):
             return False
 
         elif guess.lower() == 's':
-            print("Point system coming soon")
+            print(CurrentPoints())
             DrawCards()
 
         else:
@@ -86,8 +85,16 @@ def UserGuess(guess):
 def Main():
     EnterName()
 
+def InitialPoints():
+    return score_h[0]
+
+def CurrentPoints():
+    return score_h[-1]
+
+def ChangeScore(addedPoints):
+    score_h.append(CurrentPoints() + addedPoints)
+    return CurrentPoints()
+
 Main()
 
-#TODO
-#Need to add point system. I'm still learning how to do the equivilant of int++ (c#) with Python
 
